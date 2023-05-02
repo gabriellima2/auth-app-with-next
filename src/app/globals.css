@@ -7,3 +7,7 @@
 	padding: 0px;
 	margin: 0px;
 }
+
+body {
+	@apply bg-zinc-950 text-white font-main;
+}
