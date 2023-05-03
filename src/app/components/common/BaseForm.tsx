@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { BaseButton } from "../BaseButton";
+import { BaseButton } from "./BaseButton";
 
 type FormProps = {
 	handleSubmit: () => void;
