@@ -9,7 +9,7 @@
 }
 
 body {
-	@apply bg-zinc-950 text-white font-main;
+	@apply bg-zinc-950 text-white font-main px-5;
 }
 
 /* Change the white to any color */

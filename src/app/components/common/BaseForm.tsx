@@ -15,7 +15,7 @@ export const BaseForm = (props: FormProps) => {
 	return (
 		<form
 			onSubmit={handleSubmit}
-			className="flex flex-col gap-10 md:max-w-[500px]"
+			className="w-full flex flex-col gap-10 md:max-w-[500px]"
 		>
 			<section className="flex flex-col gap-7">{children}</section>
 			<BaseButton type="submit" title={button.title}>
