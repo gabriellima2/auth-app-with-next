@@ -17,7 +17,7 @@ export const BaseForm = (props: FormProps) => {
 			onSubmit={handleSubmit}
 			className="flex flex-col gap-10 md:max-w-[500px]"
 		>
-			<section>{children}</section>
+			<section className="flex flex-col gap-7">{children}</section>
 			<BaseButton type="submit" title={button.title}>
 				{button.text}
 			</BaseButton>
