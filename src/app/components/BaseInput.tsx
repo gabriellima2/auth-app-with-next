@@ -1,6 +1,6 @@
 import { type InputHTMLAttributes, forwardRef } from "react";
 
-type BaseInputProps = InputHTMLAttributes<HTMLInputElement>;
+export type BaseInputProps = InputHTMLAttributes<HTMLInputElement>;
 
 export const BaseInput = forwardRef<HTMLInputElement, BaseInputProps>(
 	(props, ref) => {
