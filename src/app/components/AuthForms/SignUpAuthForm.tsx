@@ -13,6 +13,11 @@ export const SignUpAuthForm = () => {
 		<BaseForm
 			handleSubmit={handleSubmit((data) => console.log(data))}
 			button={{ text: "Criar", title: "Criar conta" }}
+			link={{
+				href: "/login",
+				text: "Já tenho uma conta",
+				title: "Entrar na sua conta",
+			}}
 		>
 			<Field
 				labelText="Nome de usuário"
