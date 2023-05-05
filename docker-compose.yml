@@ -1,0 +1,23 @@
+version: "3.8"
+services:
+  db:
+    image: postgres:15.2-alpine
+    container_name: db-auth
+    restart: always
+    env_file:
+      - .env
+    environment:
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    volumes:
+      - ./db/data:/var/lib/postgresql/data
+  app:
+    build: "."
+    container_name: app-auth
+    restart: always
+    volumes:
+      - .:/usr/src/app
+      - ./node_modules:/usr/src/app/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
