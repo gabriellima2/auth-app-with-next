@@ -1,10 +1,22 @@
 import { Client } from "pg";
 
-export const PostgresHelper = {
-	client: undefined || Client.prototype,
+type TPostgresHelper = {
+	client: undefined | Client;
+	connect(): void;
+	disconnect(): void;
+};
+
+export const PostgresHelper: TPostgresHelper = {
+	client: undefined,
 	connect() {
 		if (this.client) return;
-		this.client = new Client({});
+		this.client = new Client({
+			host: process.env.DB_HOSTNAME,
+			port: 5432,
+			database: process.env.DB_NAME,
+			user: process.env.DB_USERNAME,
+			password: process.env.DB_PASSWORD,
+		});
 		this.client
 			.connect()
 			.then(() => console.log("DB connected"))
