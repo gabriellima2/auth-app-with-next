@@ -10,8 +10,9 @@ services:
       POSTGRES_PASSWORD: ${DB_PASSWORD}
       POSTGRES_USER: ${DB_USERNAME}
       POSTGRES_DB: ${DB_NAME}
+      PG_DATA: /var/lib/postgresql/data/pgdata
     volumes:
-      - ./db/data:/var/lib/postgresql/data
+      - db-volume:/var/lib/postgresql/data
     ports:
       - "8080:5432"
   app:
@@ -25,3 +26,6 @@ services:
       - "3000:3000"
     depends_on:
       - db
+volumes:
+  db-volume:
+    external: false
