@@ -1,7 +1,7 @@
 import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos/user-dtos";
-import { IAuthRepository } from "../auth-repository";
+import { IUserRepository } from "../user-repository";
 
-export class AuthRepositoryImpl implements IAuthRepository {
+export class UserRepositoryImpl implements IUserRepository {
 	add(user: UserDTOInput): Promise<UserSignUpDTOOutput> {
 		throw new Error("Method not implemented.");
 	}
