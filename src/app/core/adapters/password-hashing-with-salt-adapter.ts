@@ -1,18 +1,14 @@
 import bcrypt from "bcrypt";
 
-import { EncryptedPasswordDTO } from "../dtos/encrypted-password-dto";
-
 export class PasswordHashingWithSaltAdapterIml {
-	constructor(private readonly generateSalt: () => string) {}
-
-	hash(password: string): EncryptedPasswordDTO | null {
+	hash(password: string): string | null {
 		let passwordHash: undefined | string;
-		const salt = this.generateSalt();
-		bcrypt.hash(password, salt, (err, hash) => {
+		const saltRounds = 10;
+		bcrypt.hash(password, saltRounds, (err, hash) => {
 			if (err) return;
 			passwordHash = hash;
 		});
 		if (!passwordHash) return null;
-		return { hash: passwordHash, salt };
+		return passwordHash;
 	}
 }

@@ -1,6 +1,5 @@
 import { ISignUp } from "../sign-up";
 
-import { EncryptedPasswordDTO } from "@/app/core/dtos/encrypted-password-dto";
 import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos/user-dtos";
 
 import { DefaultError } from "@/app/core/errors/default-error";
@@ -9,9 +8,7 @@ import { IAuthRepository } from "@/app/core/repositories/auth-repository/auth-re
 export class SignUpImpl implements ISignUp {
 	constructor(
 		private readonly authRepository: IAuthRepository,
-		private readonly encryptPassword: (
-			password: string
-		) => EncryptedPasswordDTO | null,
+		private readonly encryptPassword: (password: string) => string | null,
 		private readonly validateCredentials: (user: UserDTOInput) => DefaultError
 	) {}
 
