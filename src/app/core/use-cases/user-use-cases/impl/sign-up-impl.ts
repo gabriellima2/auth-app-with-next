@@ -1,11 +1,12 @@
 import { ISignUp } from "../sign-up";
 
-import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos/user-dtos";
-import { APIError } from "@/app/core/errors/api-error";
+import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos";
+import { IUserRepository } from "@/app/core/repositories/user-repository";
 
-import { ValidationError } from "@/app/core/errors/validation-error";
+import { APIError } from "@/app/core/errors";
+import { ValidationError } from "@/app/core/errors";
+
 import { HttpStatusCode } from "@/app/core/helpers/http-status-code";
-import { IUserRepository } from "@/app/core/repositories/user-repository/user-repository";
 
 export class SignUpImpl implements ISignUp {
 	constructor(

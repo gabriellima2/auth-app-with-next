@@ -1,4 +1,4 @@
-import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos/user-dtos";
+import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos";
 import { IUserRepository } from "../user-repository";
 
 export class UserRepositoryImpl implements IUserRepository {

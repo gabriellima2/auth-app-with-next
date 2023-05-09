@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ValidationError } from "@/app/core/errors/validation-error";
+import { ValidationError } from "@/app/core/errors";
 import {
 	GenericEmailContraint,
 	GenericPasswordContraint,
