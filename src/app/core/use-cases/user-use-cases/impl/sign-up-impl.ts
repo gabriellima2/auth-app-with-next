@@ -2,14 +2,16 @@ import { ISignUp } from "../sign-up";
 
 import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos/user-dtos";
 
-import { DefaultError } from "@/app/core/errors/default-error";
+import { ValidationError } from "@/app/core/errors/validation-error";
 import { IUserRepository } from "@/app/core/repositories/user-repository/user-repository";
 
 export class SignUpImpl implements ISignUp {
 	constructor(
 		private readonly authRepository: IUserRepository,
 		private readonly encryptPassword: (password: string) => string | null,
-		private readonly validateCredentials: (user: UserDTOInput) => DefaultError
+		private readonly validateCredentials: (
+			user: UserDTOInput
+		) => ValidationError
 	) {}
 
 	async execute(user: UserDTOInput): Promise<UserSignUpDTOOutput> {
