@@ -8,11 +8,12 @@ export interface UserSignUpDTOOutput {
 	id: string;
 	username: string;
 	email: string;
-	token: string;
+	password: string;
 }
 
 export interface UserSignInDTOOutput {
 	id: string;
 	username: string;
 	email: string;
+	token: string;
 }
