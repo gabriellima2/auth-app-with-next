@@ -1,16 +1,16 @@
-import { Client } from "pg";
+import { Pool } from "pg";
 
 type TPostgresHelper = {
-	client: undefined | Client;
+	client: undefined | Pool;
 	connect(): void;
 	disconnect(): void;
 };
 
 export const PostgresHelper: TPostgresHelper = {
 	client: undefined,
-	connect() {
+	async connect() {
 		if (this.client) return;
-		this.client = new Client({
+		this.client = new Pool({
 			host: process.env.DB_HOSTNAME,
 			port: 5432,
 			database: process.env.DB_NAME,
