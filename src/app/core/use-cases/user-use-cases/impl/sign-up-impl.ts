@@ -27,7 +27,12 @@ export class SignUpImpl implements ISignUp {
 				"An error occurred while encrypting the password",
 				HttpStatusCode.serverError
 			);
-
-		return {} as UserSignUpDTOOutput;
+		const createdUser = this.authRepository.insert(user);
+		if (!createdUser)
+			throw new APIError(
+				"An error occurred while creating user",
+				HttpStatusCode.serverError
+			);
+		return createdUser;
 	}
 }
