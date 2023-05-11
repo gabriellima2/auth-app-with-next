@@ -1,14 +1,13 @@
 import bcrypt from "bcrypt";
 
 export class PasswordHashingWithSaltAdapterIml {
-	hash(password: string): string | null {
-		let passwordHash: undefined | string;
+	async hash(password: string): Promise<string | null> {
 		const saltRounds = 10;
-		bcrypt.hash(password, saltRounds, (err, hash) => {
-			if (err) return;
-			passwordHash = hash;
-		});
-		if (!passwordHash) return null;
-		return passwordHash;
+		try {
+			const passwordHash = await bcrypt.hash(password, saltRounds);
+			return passwordHash;
+		} catch (err) {
+			return null;
+		}
 	}
 }
