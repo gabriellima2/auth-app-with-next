@@ -6,15 +6,20 @@ import {
 	GenericPasswordContraint,
 } from "./generic-contraints";
 
-const signUpSchema = z.object({
-	username: z.string().nonempty().max(40, {
-		message: "O nome de usuário ultrapassou o limite de 40 caracteres",
-	}),
+export const signUpSchema = z.object({
+	username: z
+		.string()
+		.nonempty({ message: "O nome de usuário é obrigatório" })
+		.max(40, {
+			message: "O nome de usuário ultrapassou o limite de 40 caracteres",
+		}),
 	email: GenericEmailContraint,
 	password: GenericPasswordContraint,
 });
 
-type SignUpValidationParams = z.infer<typeof signUpSchema>;
+export type SignUpFields = z.infer<typeof signUpSchema>;
+
+type SignUpValidationParams = SignUpFields;
 
 export function signUpValidation(
 	credentials: SignUpValidationParams
