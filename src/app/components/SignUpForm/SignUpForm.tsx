@@ -13,20 +13,21 @@ import {
 import { makeSignUpAuthServices } from "@/app/factories/services/http";
 
 export const SignUpForm = () => {
-	const { post } = makeSignUpAuthServices("api/auth/create-account");
+	const signUpServices = makeSignUpAuthServices("api/auth/create-account");
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<SignUpFields>({ resolver: zodResolver(signUpSchema) });
-	const { onSubmit } = useCreateAccount<SignUpFields>({
-		createAccount: (params: SignUpFields) => post(params),
+	const { onSubmit, isSubmitting } = useCreateAccount<SignUpFields>({
+		createAccount: (params: SignUpFields) => signUpServices.post(params),
 	});
 
 	return (
 		<BaseForm
 			handleSubmit={handleSubmit(onSubmit)}
 			button={{ text: "Criar", title: "Criar conta" }}
+			isSubmitting={isSubmitting}
 			link={{
 				href: "/login",
 				text: "Já tenho uma conta",
