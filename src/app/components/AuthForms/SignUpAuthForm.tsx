@@ -8,9 +8,13 @@ import {
 	signUpSchema,
 	SignUpFields,
 } from "@/app/core/validations/user-validations";
+import { APIError } from "@/app/core/errors";
+
 import { makeSignUpAuthServices } from "@/app/factories/services/http";
+import { useToastContext } from "@/app/contexts/ToastContext";
 
 export const SignUpAuthForm = () => {
+	const { notify } = useToastContext();
 	const {
 		register,
 		handleSubmit,
@@ -19,7 +23,12 @@ export const SignUpAuthForm = () => {
 	const signUpServices = makeSignUpAuthServices("api/auth/create-account");
 
 	const handleSignUpAuth = async (credentials: SignUpFields) => {
-		const response = await signUpServices.post(credentials);
+		try {
+			await signUpServices.post(credentials);
+			notify("success", "Usuário criado com sucesso");
+		} catch (err) {
+			notify("error", ((err as Error) || (err as APIError)).message);
+		}
 	};
 
 	return (
