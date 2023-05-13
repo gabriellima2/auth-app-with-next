@@ -1,18 +1,18 @@
 import type { ReactNode } from "react";
 
-import { AuthTitle } from "./AuthTitle";
+import { FormTitle } from "./FormTitle";
 import { CenterFullScreen } from "./common";
 
-type AuthFormContainerProps = {
+type FormContainerProps = {
 	children: ReactNode;
 	userAction: string;
 };
 
-export const AuthFormContainer = (props: AuthFormContainerProps) => {
+export const FormContainer = (props: FormContainerProps) => {
 	const { children, userAction } = props;
 	return (
 		<CenterFullScreen className="flex-col gap-20">
-			<AuthTitle action={userAction} description="para continuar" />
+			<FormTitle action={userAction} description="para continuar" />
 			{children}
 		</CenterFullScreen>
 	);

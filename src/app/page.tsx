@@ -1,9 +1,9 @@
-import { AuthFormContainer, SignUpAuthForm } from "./components";
+import { FormContainer, SignUpForm } from "./components";
 
 export default function Home() {
 	return (
-		<AuthFormContainer userAction="Cadastre-se">
-			<SignUpAuthForm />
-		</AuthFormContainer>
+		<FormContainer userAction="Cadastre-se">
+			<SignUpForm />
+		</FormContainer>
 	);
 }

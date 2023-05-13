@@ -1,4 +1,4 @@
 export * from "./AuthForms";
 export * from "./common";
-export * from "./AuthTitle";
-export * from "./AuthFormContainer";
+export * from "./FormTitle";
+export * from "./FormContainer";
