@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useCreateAccount } from "./hooks/useCreateAccount";
 
-import { BaseForm, Field } from "../../common";
+import { BaseForm, Field } from "../common";
 
 import {
 	signUpSchema,

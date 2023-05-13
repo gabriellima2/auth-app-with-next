@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 
 import { BaseForm, Field } from "../common";
 
-export const SignInAuthForm = () => {
+export const SignInForm = () => {
 	const {
 		register,
 		handleSubmit,

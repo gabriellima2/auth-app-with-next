@@ -1,9 +1,9 @@
-import { FormContainer, SignInAuthForm } from "../components";
+import { ContainerForm, SignInForm } from "../components";
 
 export default function Login() {
 	return (
-		<FormContainer userAction="Entre">
-			<SignInAuthForm />
-		</FormContainer>
+		<ContainerForm userAction="Entre">
+			<SignInForm />
+		</ContainerForm>
 	);
 }
