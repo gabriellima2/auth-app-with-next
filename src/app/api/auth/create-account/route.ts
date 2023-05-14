@@ -1,4 +1,6 @@
+import { makeAuthController } from "@/app/core/factories/controllers";
+
 export async function POST(request: Request) {
-	const userCredentials = await request.json();
-	return new Response("Criar uma conta");
+	const authController = makeAuthController();
+	return await authController.signUp(request);
 }
