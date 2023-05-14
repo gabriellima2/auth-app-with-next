@@ -1,6 +1,6 @@
-import { ISignUp } from "../sign-up";
+import { ISignUpAuthUseCase } from "../signup-auth-use-case";
 
-import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos";
+import { UserSignUpDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos";
 import { IUserRepository } from "@/app/core/repositories/user-repository";
 
 import { APIError } from "@/app/core/errors";
@@ -8,18 +8,18 @@ import { ValidationError } from "@/app/core/errors";
 
 import { HttpStatusCode } from "@/app/core/helpers/http-status-code";
 
-export class SignUpImpl implements ISignUp {
+export class SignUpAuthUseCaseImpl implements ISignUpAuthUseCase {
 	constructor(
 		private readonly authRepository: IUserRepository,
 		private readonly encryptPassword: (
 			password: string
 		) => Promise<string | null>,
 		private readonly validateCredentials: (
-			user: UserDTOInput
+			user: UserSignUpDTOInput
 		) => ValidationError
 	) {}
 
-	async execute(user: UserDTOInput): Promise<UserSignUpDTOOutput> {
+	async execute(user: UserSignUpDTOInput): Promise<UserSignUpDTOOutput> {
 		const { message } = this.validateCredentials(user);
 		if (message) throw new APIError(message, HttpStatusCode.unauthorized);
 

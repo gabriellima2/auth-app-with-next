@@ -1,5 +1,5 @@
-import { UserDTOInput, UserSignUpDTOOutput } from "@/app/core/dtos/user-dtos";
+import { UserDTOInput, UserDTOOutput } from "@/app/core/dtos";
 
 export interface IUserRepository {
-	insert(user: UserDTOInput): Promise<UserSignUpDTOOutput | undefined>;
+	insert(user: UserDTOInput): Promise<UserDTOOutput | undefined>;
 }

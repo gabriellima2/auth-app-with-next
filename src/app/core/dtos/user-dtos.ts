@@ -4,15 +4,8 @@ export interface UserDTOInput {
 	password: string;
 }
 
-export interface UserSignUpDTOOutput {
+export interface UserDTOOutput {
 	id: string;
 	username: string;
 	email: string;
-}
-
-export interface UserSignInDTOOutput {
-	id: string;
-	username: string;
-	email: string;
-	token: string;
 }

@@ -1,11 +1,11 @@
-import { SignUpImpl } from "@/app/core/use-cases/user-use-cases";
+import { SignUpAuthUseCaseImpl } from "@/app/core/use-cases/auth-use-cases";
 import { signUpValidation } from "@/app/core/validations/user-validations";
 
 import { makeUserRepositoryImpl } from "@/app/core/factories/repositories";
 import { makePasswordHashingWithSaltAdapter } from "@/app/core/factories/adapters";
 
-export const makeSignUpImpl = () =>
-	new SignUpImpl(
+export const makeSignUpAuthUseCaseImpl = () =>
+	new SignUpAuthUseCaseImpl(
 		makeUserRepositoryImpl(),
 		makePasswordHashingWithSaltAdapter().hash,
 		signUpValidation
