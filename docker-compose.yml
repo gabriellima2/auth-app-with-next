@@ -13,6 +13,7 @@ services:
       PG_DATA: /var/lib/postgresql/data/pgdata
     volumes:
       - db-volume:/var/lib/postgresql/data
+      - ./src/migrations/dbinit.sql:/docker-entrypoint-initdb.d/dbinit.sql
     ports:
       - "8080:5432"
   app:
