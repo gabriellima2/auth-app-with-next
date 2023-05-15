@@ -1,3 +1,5 @@
+import { DatabaseError } from "pg";
+
 import { UserDTOInput, UserDTOOutput } from "@/app/core/dtos";
 
 import { PostgresHelper } from "../helpers/postgres-helper";
@@ -23,7 +25,12 @@ export class UserRepositoryImpl implements IUserRepository {
 				username: createdUser.username,
 			};
 		} catch (err) {
-			throw new APIError((err as Error).message, HttpStatusCode.serverError);
+			const message =
+				err instanceof DatabaseError && err.detail
+					? err.detail
+					: (err as Error).message;
+
+			throw new APIError(message, HttpStatusCode.serverError);
 		}
 	}
 }
