@@ -1,14 +1,14 @@
-import { Pool } from "pg";
+import { Pool, DatabaseError } from "pg";
 
 type TPostgresHelper = {
 	client: undefined | Pool;
-	connect(): void;
-	disconnect(): void;
+	connect(): Promise<void>;
+	disconnect(): Promise<void>;
 };
 
 export const PostgresHelper: TPostgresHelper = {
 	client: undefined,
-	async connect() {
+	async connect(): Promise<void> {
 		if (this.client) return;
 		this.client = new Pool({
 			host: process.env.DB_HOSTNAME,
@@ -17,18 +17,23 @@ export const PostgresHelper: TPostgresHelper = {
 			user: process.env.DB_USERNAME,
 			password: process.env.DB_PASSWORD,
 		});
-		this.client
-			.connect()
-			.then(() => console.log("DB connected"))
-			.catch((err) => console.error("DB connection error", err.stack));
+		try {
+			await this.client.connect();
+			console.log("DB connected");
+		} catch (err) {
+			console.error("DB connection error", (err as DatabaseError).stack);
+		}
 	},
-	disconnect() {
+	async disconnect(): Promise<void> {
 		if (!this.client) return;
-		this.client
-			.end()
-			.then(() => console.log("DB has disconnected"))
-			.catch((err) =>
-				console.error("DB error during disconnection", err.stack)
+		try {
+			await this.client.end();
+			console.log("DB has disconnected");
+		} catch (err) {
+			console.error(
+				"DB error during disconnection",
+				(err as DatabaseError).stack
 			);
+		}
 	},
 };
