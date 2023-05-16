@@ -2,9 +2,9 @@ import { useState } from "react";
 
 import { useToastContext } from "@/app/contexts/ToastContext";
 
-import type { SignUpFields } from "@/app/core/validations/user-validations";
-import type { UserSignUpDTOOutput } from "@/app/core/dtos";
-import type { APIError } from "@/app/core/errors";
+import type { SignUpFields } from "@/core/validations/user-validations";
+import type { UserSignUpDTOOutput } from "@/core/dtos";
+import type { APIError } from "@/core/errors";
 
 type UseCreateAccountParams<Credentials> = {
 	createAccount: (credentials: Credentials) => Promise<UserSignUpDTOOutput>;

@@ -1,4 +1,4 @@
-import { makeAuthController } from "@/app/core/factories/controllers";
+import { makeAuthController } from "@/core/factories/controllers";
 
 export async function POST(request: Request) {
 	const authController = makeAuthController();

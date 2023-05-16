@@ -9,8 +9,8 @@ import { BaseForm, Field } from "../common";
 import {
 	signUpSchema,
 	SignUpFields,
-} from "@/app/core/validations/user-validations";
-import { makeSignUpAuthServices } from "@/app/factories/services/http";
+} from "@/core/validations/user-validations";
+import { makeSignUpAuthServices } from "@/factories/services/http";
 
 export const SignUpForm = () => {
 	const signUpServices = makeSignUpAuthServices("api/auth/create-account");
