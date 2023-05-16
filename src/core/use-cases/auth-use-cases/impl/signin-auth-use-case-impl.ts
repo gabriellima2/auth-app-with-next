@@ -31,6 +31,9 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 		const credentialsFromDB = await this.repository.getByEmail(
 			credentials.email
 		);
+		if (!credentialsFromDB)
+			throw new APIError("User not found", HttpStatusCode.notFound);
+
 		const isSamePassword = this.comparePassword(
 			credentials.password,
 			credentialsFromDB.password

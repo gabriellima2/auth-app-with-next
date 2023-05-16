@@ -30,4 +30,10 @@ export class UserRepositoryImpl implements IUserRepository {
 			throw new APIError(message, HttpStatusCode.serverError);
 		}
 	}
+
+	async getByEmail(
+		email: string
+	): Promise<(UserDTOInput & UserDTOOutput) | undefined> {
+		throw new Error("Method not implemented");
+	}
 }
