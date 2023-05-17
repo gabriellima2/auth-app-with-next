@@ -1,5 +1,5 @@
 import { UserDTOOutput } from "./user-dtos";
 
-export interface UserJWTInputDTO extends Pick<UserDTOOutput, "id" | "email"> {}
+export interface UserJWTInputDTO
+	extends Pick<UserDTOOutput, "id" | "username"> {}
 
-export type UserJWTOutputDTO = Promise<string | null>;

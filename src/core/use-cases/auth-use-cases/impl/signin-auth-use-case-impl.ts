@@ -4,7 +4,6 @@ import {
 	UserSignInDTOInput,
 	UserSignInDTOOutput,
 	UserJWTInputDTO,
-	UserJWTOutputDTO,
 	ValidationOutputDTO,
 } from "@/core/dtos";
 import { IUserRepository } from "@/core/repositories/user-repository";
@@ -22,7 +21,7 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 		private readonly validateCredentials: (
 			user: UserSignInDTOInput
 		) => ValidationOutputDTO,
-		private readonly genJWT: (payload: UserJWTInputDTO) => UserJWTOutputDTO
+		private readonly createJWT: (payload: UserJWTInputDTO) => string
 	) {}
 
 	async execute(credentials: UserSignInDTOInput): Promise<UserSignInDTOOutput> {
@@ -47,9 +46,9 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 		if (!isSamePassword)
 			throw new APIError("Incorrect password", HttpStatusCode.unauthorized);
 
-		const token = await this.genJWT({
+		const token = this.createJWT({
 			id: credentialsFromDB.id,
-			email: credentialsFromDB.email,
+			username: credentialsFromDB.username,
 		});
 		if (!token)
 			throw new APIError(
