@@ -1,10 +1,13 @@
 import { ISignUpAuthUseCase } from "../signup-auth-use-case";
 
-import { UserSignUpDTOInput, UserSignUpDTOOutput } from "@/core/dtos";
+import {
+	UserSignUpDTOInput,
+	UserSignUpDTOOutput,
+	ValidationOutputDTO,
+} from "@/core/dtos";
 import { IUserRepository } from "@/core/repositories/user-repository";
 
 import { APIError } from "@/core/errors";
-import { ValidationError } from "@/core/errors";
 
 import { HttpStatusCode } from "@/core/helpers/http-status-code";
 
@@ -16,7 +19,7 @@ export class SignUpAuthUseCaseImpl implements ISignUpAuthUseCase {
 		) => Promise<string | null>,
 		private readonly validateCredentials: (
 			user: UserSignUpDTOInput
-		) => ValidationError
+		) => ValidationOutputDTO
 	) {}
 
 	async execute(user: UserSignUpDTOInput): Promise<UserSignUpDTOOutput> {

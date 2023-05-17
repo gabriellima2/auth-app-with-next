@@ -1,3 +1,3 @@
-export interface ValidationError {
+export interface ValidationOutputDTO {
 	message: string | null | undefined;
 }

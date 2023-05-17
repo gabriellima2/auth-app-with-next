@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ValidationError } from "@/core/errors";
+import { ValidationOutputDTO } from "@/core/dtos";
 import {
 	GenericEmailContraint,
 	GenericPasswordContraint,
@@ -22,9 +22,9 @@ export type SignUpFields = z.infer<typeof signUpSchema>;
 type SignUpValidationParams = SignUpFields;
 
 export function signUpValidation(
-	credentials: SignUpValidationParams
-): ValidationError {
-	const validated = signUpSchema.safeParse(credentials);
+	params: SignUpValidationParams
+): ValidationOutputDTO {
+	const validated = signUpSchema.safeParse(params);
 	if (validated.success) return { message: undefined };
 	return { message: validated.error.issues[0].message };
 }
