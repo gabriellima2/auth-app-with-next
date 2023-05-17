@@ -34,6 +34,20 @@ export class UserRepositoryImpl implements IUserRepository {
 	async getByEmail(
 		email: string
 	): Promise<(UserDTOInput & UserDTOOutput) | undefined> {
-		throw new Error("Method not implemented");
+		try {
+			const result = await dbClient.query<UserDTOInput & UserDTOOutput>(
+				"SELECT id, username, email, password FROM users WHERE email=($1)",
+				[email]
+			);
+			const user = result.rows[0];
+			return { ...user };
+		} catch (err) {
+			const message =
+				err instanceof DatabaseError && err.detail
+					? err.detail
+					: (err as Error).message;
+
+			throw new APIError(message, HttpStatusCode.serverError);
+		}
 	}
 }
