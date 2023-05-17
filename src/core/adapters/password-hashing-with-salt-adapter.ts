@@ -10,4 +10,13 @@ export class PasswordHashingWithSaltAdapterIml {
 			return null;
 		}
 	}
+
+	async compare(password: string, hash: string): Promise<boolean | null> {
+		try {
+			const result = bcrypt.compare(password, hash);
+			return result;
+		} catch (err) {
+			return null;
+		}
+	}
 }

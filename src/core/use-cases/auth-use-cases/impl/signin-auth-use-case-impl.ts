@@ -18,7 +18,7 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 		private readonly comparePassword: (
 			password: string,
 			hash: string
-		) => Promise<boolean>,
+		) => Promise<boolean | null>,
 		private readonly validateCredentials: (
 			user: UserSignInDTOInput
 		) => ValidationOutputDTO,
@@ -39,6 +39,11 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 			credentials.password,
 			credentialsFromDB.password
 		);
+		if (isSamePassword === null)
+			throw new APIError(
+				"An error occurred when comparing the password",
+				HttpStatusCode.serverError
+			);
 		if (!isSamePassword)
 			throw new APIError("Incorrect password", HttpStatusCode.unauthorized);
 
