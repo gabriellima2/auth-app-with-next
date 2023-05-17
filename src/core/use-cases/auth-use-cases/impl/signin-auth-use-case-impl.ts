@@ -5,10 +5,11 @@ import {
 	UserSignInDTOOutput,
 	UserJWTInputDTO,
 	UserJWTOutputDTO,
+	ValidationOutputDTO,
 } from "@/core/dtos";
 import { IUserRepository } from "@/core/repositories/user-repository";
 
-import { APIError, ValidationError } from "@/core/errors";
+import { APIError } from "@/core/errors";
 import { HttpStatusCode } from "@/core/helpers/http-status-code";
 
 export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
@@ -20,7 +21,7 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 		) => Promise<boolean>,
 		private readonly validateCredentials: (
 			user: UserSignInDTOInput
-		) => ValidationError,
+		) => ValidationOutputDTO,
 		private readonly genJWT: (payload: UserJWTInputDTO) => UserJWTOutputDTO
 	) {}
 
