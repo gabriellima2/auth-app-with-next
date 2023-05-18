@@ -1,3 +1,3 @@
-import { UserRepositoryImpl } from "@/core/repositories/user-repository";
+import { UserRepositoryImpl } from "@/core/repositories";
 
 export const makeUserRepositoryImpl = () => new UserRepositoryImpl();

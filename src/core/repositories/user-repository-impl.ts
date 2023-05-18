@@ -1,19 +1,25 @@
 import { DatabaseError } from "pg";
 
-import { UserDTOInput, UserDTOOutput } from "@/core/dtos";
-import { IUserRepository } from "../user-repository";
+import {
+	CreateUserRepository,
+	GetByEmailUserRepository,
+	UserRepository,
+	UserEntity,
+	APIError,
+} from "@/core/entities";
 
 import { HttpStatusCode } from "@/core/helpers/http-status-code";
-import { APIError } from "@/core/errors";
-
 import { dbClient } from "@/services/db-client";
 
-export class UserRepositoryImpl implements IUserRepository {
-	async insert(user: UserDTOInput): Promise<UserDTOOutput | undefined> {
+export class UserRepositoryImpl implements UserRepository {
+	async create(
+		params: CreateUserRepository.Params
+	): Promise<CreateUserRepository.Return | undefined> {
+		const { username, email, password } = params;
 		try {
-			const result = await dbClient.query<UserDTOOutput>(
+			const result = await dbClient.query<UserEntity>(
 				"INSERT INTO users (username, email, password) VALUES ($1, $2, $3) RETURNING *",
-				[user.username, user.email, user.password]
+				[username, email, password]
 			);
 			const createdUser = result.rows[0];
 			return {
@@ -32,10 +38,11 @@ export class UserRepositoryImpl implements IUserRepository {
 	}
 
 	async getByEmail(
-		email: string
-	): Promise<(UserDTOInput & UserDTOOutput) | undefined> {
+		params: GetByEmailUserRepository.Params
+	): Promise<GetByEmailUserRepository.Return | undefined> {
+		const { email } = params;
 		try {
-			const result = await dbClient.query<UserDTOInput & UserDTOOutput>(
+			const result = await dbClient.query<UserEntity>(
 				"SELECT id, username, email, password FROM users WHERE email=($1)",
 				[email]
 			);
