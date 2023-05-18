@@ -34,7 +34,7 @@ export class SignInAuthUseCaseImpl implements SignInAuthUseCase {
 		if (!credentialsFromDB)
 			throw new APIError("User not found", HttpStatusCode.notFound);
 
-		const isSamePassword = this.comparePassword(
+		const isSamePassword = await this.comparePassword(
 			credentials.password,
 			credentialsFromDB.password
 		);

@@ -40,6 +40,7 @@ export class UserRepositoryImpl implements IUserRepository {
 				[email]
 			);
 			const user = result.rows[0];
+			if (!user) return undefined;
 			return { ...user };
 		} catch (err) {
 			const message =
