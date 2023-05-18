@@ -1,7 +1,10 @@
 import jwt from "jsonwebtoken";
+import { JWTAdapter, JWTAdapterCreateProtocols } from "../entities";
 
-export class JWTAdapter<Payload extends {}> {
-	create(payload: Payload) {
+export class JWTAdapterImpl implements JWTAdapter {
+	create(
+		payload: JWTAdapterCreateProtocols.Params
+	): JWTAdapterCreateProtocols.Return {
 		const secretKey = process.env.SECRET_KEY_TO_GEN_JWT;
 		if (!secretKey)
 			throw new Error("No secret key has been defined to generate jwt");

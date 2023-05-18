@@ -1,1 +1,2 @@
-export * from "./password-hashing-with-salt-adapter";
+export * from "./password-hashing-adapter-impl";
+export * from "./jwt-adapter-impl";
