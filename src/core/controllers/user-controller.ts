@@ -1,17 +1,19 @@
 import {
-	makeSignInAuthUseCaseImpl,
-	makeSignUpAuthUseCaseImpl,
-} from "../factories/use-cases/auth-use-cases";
+	APIError,
+	SignInUseCaseProtocols,
+	SignUpUseCaseProtocols,
+} from "../entities";
+import {
+	makeSignUpUseCaseImpl,
+	makeSignInUseCaseImpl,
+} from "../factories/use-cases";
 
-import type { UserSignInDTOInput, UserSignUpDTOInput } from "../dtos";
-import { APIError } from "../errors";
-
-export class AuthController {
+export class UserController {
 	async signUp(request: Request): Promise<Response> {
 		const credentials = await request.json();
 		try {
-			const createdUser = await makeSignUpAuthUseCaseImpl().execute(
-				credentials as UserSignUpDTOInput
+			const createdUser = await makeSignUpUseCaseImpl().execute(
+				credentials as SignUpUseCaseProtocols.Params
 			);
 			return new Response(JSON.stringify(createdUser), { status: 201 });
 		} catch (err) {
@@ -24,8 +26,8 @@ export class AuthController {
 	async signIn(request: Request): Promise<Response> {
 		const credentials = await request.json();
 		try {
-			const loggedUser = await makeSignInAuthUseCaseImpl().execute(
-				credentials as UserSignInDTOInput
+			const loggedUser = await makeSignInUseCaseImpl().execute(
+				credentials as SignInUseCaseProtocols.Params
 			);
 			return new Response(JSON.stringify(loggedUser), { status: 200 });
 		} catch (err) {

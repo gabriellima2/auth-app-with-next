@@ -1,1 +1,1 @@
-export * from "./make-auth-controller";
+export * from "./make-user-controller";
