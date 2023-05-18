@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { ValidationOutputDTO } from "@/core/dtos";
+import { ValidationDefaultReturn } from "@/core/entities";
 import {
 	GenericEmailContraint,
 	GenericPasswordContraint,
@@ -17,7 +17,7 @@ type SignInValidationParams = SignInFields;
 
 export function signInValidation(
 	params: SignInValidationParams
-): ValidationOutputDTO {
+): ValidationDefaultReturn {
 	const validated = signInSchema.safeParse(params);
 	if (validated.success) return { message: undefined };
 	return { message: validated.error.issues[0].message };

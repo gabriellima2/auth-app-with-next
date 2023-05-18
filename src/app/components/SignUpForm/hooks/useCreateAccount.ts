@@ -3,11 +3,13 @@ import { useState } from "react";
 import { useToastContext } from "@/app/contexts/ToastContext";
 
 import type { SignUpFields } from "@/core/validations/user-validations";
-import type { UserSignUpDTOOutput } from "@/core/dtos";
-import type { APIError } from "@/core/errors";
+import type { SignUpUseCaseProtocols } from "@/core/entities";
+import type { APIError } from "@/core/entities/errors";
 
 type UseCreateAccountParams<Credentials> = {
-	createAccount: (credentials: Credentials) => Promise<UserSignUpDTOOutput>;
+	createAccount: (
+		credentials: Credentials
+	) => Promise<SignUpUseCaseProtocols.Return>;
 };
 
 type UseCreateAccountReturn<Credentials> = {

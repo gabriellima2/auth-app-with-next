@@ -1,16 +1,18 @@
-import { UserDTOInput, UserSignUpDTOOutput } from "@/core/dtos";
+import { SignUpUseCaseProtocols } from "@/core/entities";
 import { BASE_API_URL } from "@/constants/base-api-url";
 
 export class SignUpAuthServices {
 	constructor(private readonly endpoint: string) {}
 
-	async post(userCredentials: UserDTOInput): Promise<UserSignUpDTOOutput> {
+	async post(
+		credentials: SignUpUseCaseProtocols.Params
+	): Promise<SignUpUseCaseProtocols.Return> {
 		const url = `${BASE_API_URL}${this.endpoint}`;
 		const response = await fetch(url, {
 			method: "POST",
-			body: JSON.stringify(userCredentials),
+			body: JSON.stringify(credentials),
 		});
-		const data: UserSignUpDTOOutput = await response.json();
+		const data: SignUpUseCaseProtocols.Return = await response.json();
 		return data;
 	}
 }
