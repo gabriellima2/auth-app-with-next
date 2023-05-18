@@ -1,3 +1,6 @@
-export async function GET(request: Request) {
-	return new Response("Entrar em sua conta");
+import { makeAuthController } from "@/core/factories/controllers";
+
+export async function POST(request: Request) {
+	const response = await makeAuthController().signIn(request);
+	return response;
 }
