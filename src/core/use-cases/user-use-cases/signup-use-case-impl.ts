@@ -3,10 +3,11 @@ import {
 	SignUpUseCase,
 	SignUpUseCaseProtocols,
 	ValidationDefaultReturn,
-	APIError,
 	PasswordHashingAdapter,
+	ValidationError,
+	PasswordEncryptionError,
+	CreateUserError,
 } from "@/core/entities";
-import { HttpStatusCode } from "@/core/helpers/http-status-code";
 
 export class SignUpUseCaseImpl implements SignUpUseCase {
 	constructor(
@@ -21,25 +22,19 @@ export class SignUpUseCaseImpl implements SignUpUseCase {
 		params: SignUpUseCaseProtocols.Params
 	): Promise<SignUpUseCaseProtocols.Return> {
 		const { message } = this.validate(params);
-		if (message) throw new APIError(message, HttpStatusCode.unauthorized);
+		if (message) throw new ValidationError(message);
 
 		const encryptedPassword = await this.passwordHashingAdapter.hash({
 			password: params.password,
 		});
-		if (!encryptedPassword)
-			throw new APIError(
-				"An error occurred while encrypting the password",
-				HttpStatusCode.serverError
-			);
+		if (!encryptedPassword) throw new PasswordEncryptionError();
+
 		const createdUser = await this.repository.create({
 			...params,
 			password: encryptedPassword,
 		});
-		if (!createdUser)
-			throw new APIError(
-				"An error occurred while creating user",
-				HttpStatusCode.serverError
-			);
+		if (!createdUser) throw new CreateUserError();
+
 		return createdUser;
 	}
 }

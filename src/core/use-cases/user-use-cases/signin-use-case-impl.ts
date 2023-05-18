@@ -1,13 +1,16 @@
 import {
 	PasswordHashingAdapter,
 	UserRepository,
-	APIError,
 	SignInUseCase,
 	JWTAdapter,
 	SignInUseCaseProtocols,
 	ValidationDefaultReturn,
+	UserDoesNotExistError,
+	PasswordVerificationError,
+	InvalidCredentialsError,
+	GenerateTokenError,
+	ValidationError,
 } from "@/core/entities";
-import { HttpStatusCode } from "@/core/helpers/http-status-code";
 
 export class SignInUseCaseImpl implements SignInUseCase {
 	constructor(
@@ -23,35 +26,26 @@ export class SignInUseCaseImpl implements SignInUseCase {
 		params: SignInUseCaseProtocols.Params
 	): Promise<SignInUseCaseProtocols.Return> {
 		const { message } = this.validate(params);
-		if (message) throw new APIError(message, HttpStatusCode.unauthorized);
+		if (message) throw new ValidationError(message);
 
 		const userFound = await this.repository.getByEmail({
 			email: params.email,
 		});
-		if (!userFound)
-			throw new APIError("User not found", HttpStatusCode.notFound);
+		if (!userFound) throw new UserDoesNotExistError();
 
 		const isSamePassword = await this.passwordHashingAdapter.compare({
 			password: params.password,
 			hash: userFound.password,
 		});
-		if (isSamePassword === null)
-			throw new APIError(
-				"An error occurred when comparing the password",
-				HttpStatusCode.serverError
-			);
-		if (!isSamePassword)
-			throw new APIError("Incorrect password", HttpStatusCode.unauthorized);
+		if (isSamePassword === null) throw new PasswordVerificationError();
+		if (!isSamePassword) throw new InvalidCredentialsError();
 
 		const token = this.jwtAdapter.create({
 			id: userFound.id,
 			username: userFound.username,
 		});
-		if (!token)
-			throw new APIError(
-				"An error occurred while generating the token",
-				HttpStatusCode.serverError
-			);
+		if (!token) throw new GenerateTokenError();
+
 		return {
 			id: userFound.id,
 			email: userFound.email,
