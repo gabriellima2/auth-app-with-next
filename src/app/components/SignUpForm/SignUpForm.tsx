@@ -10,17 +10,17 @@ import {
 	signUpSchema,
 	SignUpFields,
 } from "@/core/validations/user-validations";
-import { makeSignUpAuthServices } from "@/factories/services/http";
+import { makeSignUpAuthService } from "@/factories/services/http";
 
 export const SignUpForm = () => {
-	const signUpServices = makeSignUpAuthServices("api/auth/create-account");
+	const signUpServices = makeSignUpAuthService("api/auth/create-account");
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm<SignUpFields>({ resolver: zodResolver(signUpSchema) });
 	const { createAccount, isCreatingAccount } = useCreateAccount<SignUpFields>({
-		service: (params: SignUpFields) => signUpServices.post(params),
+		service: (params: SignUpFields) => signUpServices.execute(params),
 	});
 
 	return (

@@ -3,8 +3,7 @@ import { useState } from "react";
 import { useToastContext } from "@/app/contexts/ToastContext";
 
 import type { SignUpFields } from "@/core/validations/user-validations";
-import type { SignUpUseCaseProtocols } from "@/core/entities";
-import type { APIError } from "@/core/entities/errors";
+import type { SignUpUseCaseProtocols, APIError } from "@/core/entities";
 
 type UseCreateAccountParams<Credentials> = {
 	service: (credentials: Credentials) => Promise<SignUpUseCaseProtocols.Return>;

@@ -1,10 +1,10 @@
-import { SignUpUseCaseProtocols } from "@/core/entities";
 import { BASE_API_URL } from "@/constants/base-api-url";
+import type { SignUpUseCaseProtocols } from "@/core/entities";
 
-export class SignUpAuthServices {
+export class SignUpAuthService {
 	constructor(private readonly endpoint: string) {}
 
-	async post(
+	async execute(
 		credentials: SignUpUseCaseProtocols.Params
 	): Promise<SignUpUseCaseProtocols.Return> {
 		const url = `${BASE_API_URL}${this.endpoint}`;
