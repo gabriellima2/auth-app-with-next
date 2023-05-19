@@ -19,15 +19,15 @@ export const SignUpForm = () => {
 		handleSubmit,
 		formState: { errors },
 	} = useForm<SignUpFields>({ resolver: zodResolver(signUpSchema) });
-	const { onSubmit, isSubmitting } = useCreateAccount<SignUpFields>({
-		createAccount: (params: SignUpFields) => signUpServices.post(params),
+	const { createAccount, isCreatingAccount } = useCreateAccount<SignUpFields>({
+		service: (params: SignUpFields) => signUpServices.post(params),
 	});
 
 	return (
 		<BaseForm
-			handleSubmit={handleSubmit(onSubmit)}
+			handleSubmit={handleSubmit(createAccount)}
 			button={{ text: "Criar", title: "Criar conta" }}
-			isSubmitting={isSubmitting}
+			isSubmitting={isCreatingAccount}
 			link={{
 				href: "/login",
 				text: "Já tenho uma conta",

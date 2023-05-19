@@ -7,38 +7,36 @@ import type { SignUpUseCaseProtocols } from "@/core/entities";
 import type { APIError } from "@/core/entities/errors";
 
 type UseCreateAccountParams<Credentials> = {
-	createAccount: (
-		credentials: Credentials
-	) => Promise<SignUpUseCaseProtocols.Return>;
+	service: (credentials: Credentials) => Promise<SignUpUseCaseProtocols.Return>;
 };
 
 type UseCreateAccountReturn<Credentials> = {
-	onSubmit: (credentials: Credentials) => Promise<void>;
-	isSubmitting: boolean;
+	createAccount: (credentials: Credentials) => Promise<void>;
+	isCreatingAccount: boolean;
 };
 
 export function useCreateAccount<Credentials extends SignUpFields>(
 	params: UseCreateAccountParams<Credentials>
 ): UseCreateAccountReturn<Credentials> {
-	const { createAccount } = params;
+	const { service } = params;
 
-	const [isSubmitting, setIsSubmitting] = useState(false);
+	const [isCreatingAccount, setIsCreatingAccount] = useState(false);
 	const { notify } = useToastContext();
 
-	const onSubmit = async (credentials: Credentials) => {
-		setIsSubmitting(true);
+	const createAccount = async (credentials: Credentials) => {
+		setIsCreatingAccount(true);
 		try {
-			await createAccount(credentials);
+			await service(credentials);
 			notify("success", "Usuário criado com sucesso");
 		} catch (err) {
 			notify("error", ((err as Error) || (err as APIError)).message);
 		} finally {
-			setIsSubmitting(false);
+			setIsCreatingAccount(false);
 		}
 	};
 
 	return {
-		onSubmit,
-		isSubmitting,
+		createAccount,
+		isCreatingAccount,
 	};
 }
