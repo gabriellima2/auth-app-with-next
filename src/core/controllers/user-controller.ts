@@ -17,7 +17,8 @@ export class UserController {
 			);
 			return new Response(JSON.stringify(createdUser), { status: 201 });
 		} catch (err) {
-			return new Response((err as APIError).message, {
+			const error = { message: (err as APIError).message };
+			return new Response(JSON.stringify(error), {
 				status: err instanceof APIError ? (err as APIError).statusCode : 500,
 			});
 		}
@@ -31,7 +32,8 @@ export class UserController {
 			);
 			return new Response(JSON.stringify(loggedUser), { status: 200 });
 		} catch (err) {
-			return new Response((err as APIError).message, {
+			const error = { message: (err as APIError).message };
+			return new Response(JSON.stringify(error), {
 				status: err instanceof APIError ? (err as APIError).statusCode : 500,
 			});
 		}

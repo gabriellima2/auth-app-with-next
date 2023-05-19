@@ -8,6 +8,7 @@ import type { APIError, SignInUseCaseProtocols } from "@/core/entities";
 
 type UseLoginParams<Credentials> = {
 	service: (credentials: Credentials) => Promise<SignInUseCaseProtocols.Return>;
+	handleTokenStorage: (token: string) => void;
 	redirectTo: string;
 };
 
@@ -19,7 +20,7 @@ type UseLoginReturn<Credentials> = {
 export function useLogin<Credentials extends SignInFields>(
 	params: UseLoginParams<Credentials>
 ): UseLoginReturn<Credentials> {
-	const { service, redirectTo } = params;
+	const { service, handleTokenStorage, redirectTo } = params;
 
 	const [isLoggingIn, setIsLogginIn] = useState(false);
 	const { notify } = useToastContext();
@@ -27,7 +28,8 @@ export function useLogin<Credentials extends SignInFields>(
 	const login = async (credentials: Credentials) => {
 		setIsLogginIn(true);
 		try {
-			await service(credentials);
+			const response = await service(credentials);
+			handleTokenStorage(response.token);
 			redirect(redirectTo);
 		} catch (err) {
 			notify("error", ((err as Error) || (err as APIError)).message);

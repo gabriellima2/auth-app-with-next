@@ -21,6 +21,7 @@ export const SignInForm = () => {
 	const { login, isLoggingIn } = useLogin<SignInFields>({
 		redirectTo: "/private/home",
 		service: (params: SignInFields) => signInService.execute(params),
+		handleTokenStorage: (token: string) => console.log(token),
 	});
 
 	return (

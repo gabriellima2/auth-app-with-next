@@ -12,6 +12,10 @@ export class SignInAuthService {
 			method: "POST",
 			body: JSON.stringify(credentials),
 		});
+		if (!response.ok) {
+			const error = (await response.json()) as Error;
+			throw new Error(error.message);
+		}
 		const data: SignInUseCaseProtocols.Return = await response.json();
 		return data;
 	}

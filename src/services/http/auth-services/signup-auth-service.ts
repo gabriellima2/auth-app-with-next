@@ -12,6 +12,10 @@ export class SignUpAuthService {
 			method: "POST",
 			body: JSON.stringify(credentials),
 		});
+		if (!response.ok) {
+			const error = (await response.json()) as Error;
+			throw new Error(error.message);
+		}
 		const data: SignUpUseCaseProtocols.Return = await response.json();
 		return data;
 	}
