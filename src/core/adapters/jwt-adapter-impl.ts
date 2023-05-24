@@ -1,5 +1,9 @@
-import { SignJWT } from "jose";
-import { JWTAdapter, JWTAdapterCreateProtocols } from "../entities";
+import { SignJWT, jwtVerify } from "jose";
+import {
+	JWTAdapter,
+	JWTAdapterCreateProtocols,
+	JWTAdapterVerifyProtocols,
+} from "../entities";
 
 const secretKey = new TextEncoder().encode(process.env.SECRET_KEY_TO_GEN_JWT);
 
@@ -18,5 +22,16 @@ export class JWTAdapterImpl implements JWTAdapter {
 			.setNotBefore(currentTimestamp)
 			.sign(secretKey);
 		return token;
+	}
+
+	async verify(
+		params: JWTAdapterVerifyProtocols.Params
+	): Promise<JWTAdapterVerifyProtocols.Return> {
+		const { token } = params;
+		if (!secretKey)
+			throw new Error("No secret key has been defined to generate jwt");
+
+		const { payload } = await jwtVerify(token, secretKey);
+		return payload as JWTAdapterVerifyProtocols.Return;
 	}
 }
