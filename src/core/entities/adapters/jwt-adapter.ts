@@ -3,7 +3,7 @@ import { UserEntity } from "../user-entity";
 export interface JWTAdapter {
 	create(
 		params: JWTAdapterCreateProtocols.Params
-	): JWTAdapterCreateProtocols.Return;
+	): Promise<JWTAdapterCreateProtocols.Return>;
 }
 
 export namespace JWTAdapterCreateProtocols {

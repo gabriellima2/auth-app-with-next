@@ -40,7 +40,7 @@ export class SignInUseCaseImpl implements SignInUseCase {
 		if (isSamePassword === null) throw new PasswordVerificationError();
 		if (!isSamePassword) throw new InvalidCredentialsError();
 
-		const token = this.jwtAdapter.create({
+		const token = await this.jwtAdapter.create({
 			id: userFound.id,
 			username: userFound.username,
 		});
