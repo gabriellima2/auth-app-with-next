@@ -6,3 +6,5 @@ export * from "./password-encryption-error";
 export * from "./user-does-not-exist-error";
 export * from "./create-user-error";
 export * from "./validation-error";
+export * from "./empty-user-token-error";
+export * from "./invalid-user-token-error";

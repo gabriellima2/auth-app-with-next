@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+import { EmptyUserTokenError, InvalidUserTokenError } from "./core/entities";
+
 import { USER_TOKEN } from "./constants/user-token";
 import { makeJWTAdapterImpl } from "./core/factories/adapters/make-jwt-adapter-impl";
 
@@ -17,9 +19,9 @@ export async function middleware(request: NextRequest) {
 		currentUrl.endsWith(PATHNAMES.ROOT) || currentUrl.endsWith(PATHNAMES.LOGIN);
 
 	try {
-		if (!token) throw new Error()
-		const decoded = await jwtAdapterImpl.verify({ token });
-		if (!decoded) throw new Error();
+		if (!token) throw new EmptyUserTokenError()
+		const decodedJwt = await jwtAdapterImpl.verify({ token });
+		if (!decodedJwt) throw new InvalidUserTokenError();
 		if (isAuthPath)
 			return NextResponse.redirect(new URL(PATHNAMES.HOME, currentUrl));
 
