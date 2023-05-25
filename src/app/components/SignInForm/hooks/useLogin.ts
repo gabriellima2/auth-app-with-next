@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
 import { useToastContext } from "@/app/contexts/ToastContext";
 
@@ -24,13 +24,14 @@ export function useLogin<Credentials extends SignInFields>(
 
 	const [isLoggingIn, setIsLogginIn] = useState(false);
 	const { notify } = useToastContext();
+	const router = useRouter();
 
 	const login = async (credentials: Credentials) => {
 		setIsLogginIn(true);
 		try {
 			const response = await service(credentials);
 			handleTokenStorage(response.token);
-			redirect(redirectTo);
+			router.push(redirectTo);
 		} catch (err) {
 			notify("error", ((err as Error) || (err as APIError)).message);
 		} finally {

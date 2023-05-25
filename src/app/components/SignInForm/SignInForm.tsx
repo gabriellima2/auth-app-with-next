@@ -19,7 +19,7 @@ export const SignInForm = () => {
 		formState: { errors },
 	} = useForm<SignInFields>({ resolver: zodResolver(signInSchema) });
 	const { login, isLoggingIn } = useLogin<SignInFields>({
-		redirectTo: "/private/home",
+		redirectTo: "/home",
 		service: (params: SignInFields) => signInService.execute(params),
 		handleTokenStorage: (token: string) => console.log(token),
 	});
