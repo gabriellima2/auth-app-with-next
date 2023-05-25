@@ -12,12 +12,12 @@ const PATHNAMES = {
 
 export async function middleware(request: NextRequest) {
 	const token = request.cookies.get(USER_TOKEN)?.value;
-	if (!token) return NextResponse.redirect(new URL("/"));
-
 	const currentUrl = request.url;
 	const isAuthPath =
 		currentUrl.endsWith(PATHNAMES.ROOT) || currentUrl.endsWith(PATHNAMES.LOGIN);
+
 	try {
+		if (!token) throw new Error()
 		const decoded = await jwtAdapterImpl.verify({ token });
 		if (!decoded) throw new Error();
 		if (isAuthPath)
@@ -26,15 +26,11 @@ export async function middleware(request: NextRequest) {
 		return NextResponse.next();
 	} catch (err) {
 		if (currentUrl.endsWith(PATHNAMES.ROOT)) return NextResponse.next();
-		if (
-			Object.values(PATHNAMES).some((pathname) => currentUrl.endsWith(pathname))
-		) {
-			if (!currentUrl.endsWith(PATHNAMES.LOGIN))
-				return NextResponse.redirect(new URL(PATHNAMES.LOGIN, currentUrl));
-		}
+		if (!currentUrl.endsWith(PATHNAMES.LOGIN))
+			return NextResponse.redirect(new URL(PATHNAMES.LOGIN, currentUrl));
 	}
 }
 
 export const config = {
-	matcher: [PATHNAMES.ROOT, PATHNAMES.LOGIN, PATHNAMES.HOME],
+	matcher: ['/((?!api|_next/static|_next/image|favicon.ico).*)'],
 };
