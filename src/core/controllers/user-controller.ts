@@ -8,6 +8,8 @@ import {
 	makeSignInUseCaseImpl,
 } from "../factories/use-cases";
 
+import { USER_TOKEN } from "@/constants/user-token";
+
 export class UserController {
 	async signUp(request: Request): Promise<Response> {
 		const credentials = await request.json();
@@ -30,7 +32,13 @@ export class UserController {
 			const loggedUser = await makeSignInUseCaseImpl().execute(
 				credentials as SignInUseCaseProtocols.Params
 			);
-			return new Response(JSON.stringify(loggedUser), { status: 200 });
+
+			return new Response(JSON.stringify(loggedUser), {
+				status: 200,
+				headers: {
+					"Set-Cookie": `${USER_TOKEN}=${loggedUser.token}; path=/; samesite=strict; httponly; secure;`,
+				},
+			});
 		} catch (err) {
 			const error = { message: (err as APIError).message };
 			return new Response(JSON.stringify(error), {
