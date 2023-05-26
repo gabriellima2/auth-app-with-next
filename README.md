@@ -32,6 +32,16 @@ OBS: É necessário que o [Git](https://git-scm.com/) esteja instalado em sua m�
 ```bash
 1. Clone o repositório:
 $ git clone https://github.com/gabriellima2/auth-app-with-next.git
+
+2. Acesse a pasta e crie uma arquivo .env
+
+3. Dentro de .env, adicione as seguintes variáveis:
+DB_HOSTNAME=nome-de-host
+DB_USERNAME=nome-de-usuario
+DB_PASSWORD=senha-do-banco
+DB_NAME=nome-do-banco
+
+SECRET_KEY_TO_GEN_JWT=chave-privada-para-gerar-jwt
 ```
 
 ## Docker Compose
@@ -39,10 +49,10 @@ $ git clone https://github.com/gabriellima2/auth-app-with-next.git
 Caso escolha rodar via Docker, certifique-se que esteja instalado em sua máquina o [Docker](https://www.docker.com/) e o [Docker Compose](https://docs.docker.com/compose/)
 
 ```bash
-2. Acesse a pasta e inicie a aplicação em modo de desenvolvimento:
+4. Inicie a aplicação em modo de desenvolvimento:
 $ docker-compose up
 
-3. O servidor será aberto em http://localhost:3000
+5. O servidor será aberto em http://localhost:3000
 ```
 
 ## NPM ou Yarn
@@ -50,13 +60,13 @@ $ docker-compose up
 Caso escolha rodar via Gerenciadores de Pacotes, certifique-se que esteja instalado em sua máquina o [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm) ou [yarn](https://yarnpkg.com/)
 
 ```bash
-2. Acesse a pasta e instale as dependências via terminal:
+4. Instale as dependências via terminal:
 $ yarn || npm i
 
-3. Inicie a aplicação em modo de desenvolvimento:
+5. Inicie a aplicação em modo de desenvolvimento:
 $ yarn dev || npm run dev
 
-4. O servidor será aberto em http://localhost:3000
+6. O servidor será aberto em http://localhost:3000
 ```
 
 <p align="center">Projeto feito com 💙 por <a href="https://www.linkedin.com/in/gabriel-lima-860612236">Gabriel Lima</a></p>
